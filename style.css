@@ -1,0 +1,127 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.card {
+    transition: all 5s;
+    border: 2px solid black;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    margin:50px;
+    padding: 20px;
+}
+
+.card:hover {
+    transition: all 2s;
+    border-radius: 90%;
+    transform: rotate(720deg) scale(1.5);
+    background-color: rgba(35, 151, 197, 0.459);
+}
+
+.case {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.case:hover {
+    box-shadow: 0 0 2px white;
+    z-index: 1;
+}
+
+.mob {
+    width: 25px;
+    height: 25px;
+    background-color: red;
+}
+
+#stats_mob {
+    background-color: white;
+    width: 60px;
+    height: 20px;
+    box-shadow: 0 0 2px black;
+    margin-top: -30px;
+    margin-left: -20px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.finish {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 128, 0, 0.637);
+}
+
+#grille {
+    position: relative;
+    margin: 0 auto;
+    position: absolute;
+    left: 25%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+#life_div {
+    width: 100%;
+    height: 10%;
+    margin-top: 10px;
+    position: relative;
+}
+
+#life_bar {
+    margin: 0 auto;
+    width: 80%;
+    height: 50%;
+    background-color: whitesmoke;
+    border-radius: 5%;
+    position: relative;
+    margin-bottom: 2%;
+}
+
+#life_value {
+    height: 100%;
+    width: 20%;
+    background-color: darkgreen;
+}
+
+#life_info{
+    position: absolute;
+    color: rgb(211, 53, 53);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 8%;
+    box-shadow: 0 0 2px black;
+    padding: 5px;
+    border-radius: 5%;
+}
+
+#build_footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+}
+
+.turret {
+    background-color: white;
+    border-radius: 15px;
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    text-align: center;
+}
+
+img {
+    width: 60px;
+    height: 60px;
+}
