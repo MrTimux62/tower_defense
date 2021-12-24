@@ -22,7 +22,12 @@ let Top_Go, Right_Go, Bottom_Go;
 let No_Bottom = 0;
 let No_Top = 0;
 let selected_turret = "";
+let selected_case = "";
 let turret_rotation = 0;
+let random_number = 0;
+let random_number2 = 0;
+let mob_cible = "";
+let difficulty = 10;
 
 $(document).ready(function () {
 
@@ -65,7 +70,8 @@ $(document).ready(function () {
         Xcord = Xcord + 50;
     }
 
-    $("#grille").append("<div style='position:absolute; left: " + UnitY + "; top: " + UnitX + "' class='mob'><div id='stats_mob'>5 unités</div></div>")
+    random_number2 = Math.floor((Math.random() * difficulty) + 10);
+    $("#grille").append("<div style='position:absolute; left: " + UnitY + "px; top: " + UnitX + "px;' class='mob' name='" + random_number2 + "' id='mob_" + Math.floor((Math.random() * 100) + 1) + "'><div id='stats_mob'>"+random_number2+" unités</div></div>")
     $("#grille").append("<div style='position:absolute; left: " + FinishY + "; top: " + FinishX + "' class='finish'></div>")
 
     deplacement = setInterval(() => {
@@ -103,14 +109,24 @@ $(document).ready(function () {
         }
 
         if (UnitX - 12.5 + "px" == $(".finish").css("top") && UnitY - 12.5 + "px" == $(".finish").css("left")) {
-            setMob(StartX, StartY);
-            $(".mob").css("top", UnitX + "px");
-            $(".mob").css("left", UnitY + "px");
+            difficulty = difficulty + 5;
+            $("#life_info").html("Vie Restantes : " + (parseInt($("#life_info").attr('name')) - parseInt($(".mob").attr('name'))))
+            $("#life_value").css("width", (parseInt($("#life_info").attr('name')) - parseInt($(".mob").attr('name'))) + "%")
+            $("#life_info").attr('name', parseInt($("#life_info").attr('name')) - parseInt($(".mob").attr('name')))
+            $(".mob").remove();
+            setTimeout(() => {
+                random_number2 = Math.floor((Math.random() * 30) + difficulty);
+                $("#grille").append("<div style='position:absolute; left: " + StartX + "; top: " + StartY + "' class='mob' name='" + random_number2 + "' id='mob_" + Math.floor((Math.random() * 100) + 1) + "'><div id='stats_mob'>"+random_number2+" unités</div></div>")
+                setMob(StartX, StartY);
+                $(".mob").css("top", UnitX + "px");
+                $(".mob").css("left", UnitY + "px");
+                difficulty = difficulty + 5;
+            }, 5000);
         }
     }, 1500);
     moneydrop = setInterval(() => {
-        $("#money h1").text(parseInt($("#money h1").text()) + 5 + "$");
-    }, 3000);
+        $("#money h1").text(parseInt($("#money h1").text()) + 1 + "$");
+    }, 1000);
 
     $(".case").click(function (e) {
         e.preventDefault();
@@ -121,6 +137,7 @@ $(document).ready(function () {
                 $("#money h1").text(parseInt($("#money h1").text()) - cost_turret + "$");
                 $(".turret").css("background-color", "white");
                 $(".case").css("cursor", "");
+                $(this).attr("name", cost_turret / 50);
                 $(this).css("transform", "rotate(" + turret_rotation + "deg)")
                 selected_turret = "";
             }
@@ -130,6 +147,7 @@ $(document).ready(function () {
 
     $(".case").hover(function () {
         // over
+        selected_case = $(this).attr("id");
         if (selected_turret != "") {
             if ($(this).find('input').length == 0) {
                 $(this).html("<img src='./img/tourelles/" + selected_turret + ".png'>");
@@ -138,6 +156,7 @@ $(document).ready(function () {
         }
     }, function () {
         // out
+        selected_case = "";
         if (selected_turret != "") {
             if ($(this).find('input').length == 0) {
                 $(this).html("");
@@ -150,10 +169,13 @@ $(document).ready(function () {
 
     $(document).keydown(function (e) {
         if (e.which = 82) {
-            if (turret_rotation == 360) {
-                turret_rotation = 90;
-            } else {
-                turret_rotation = turret_rotation + 90;
+            if (selected_case != "") {
+                if (turret_rotation == 360) {
+                    turret_rotation = 90;
+                } else {
+                    turret_rotation = turret_rotation + 90;
+                }
+                $("#" + selected_case).css("transform", "rotate(" + turret_rotation + "deg)")
             }
         }
     });
@@ -180,15 +202,47 @@ $(document).ready(function () {
             $(".case").css("cursor", "pointer");
         }
     });
-/*
+
     attack_turret = setInterval(() => {
         for (let index = 1; index < case_nb; index++) {
-            if ($("#"+index).find('input').length == 0) {
-                if ($("#"+index) {
-                    
-                }
+            if ($("#" + index).find('input').length) {
+                $(".mob").each(function () {
+                    if (parseInt($("#" + index).css("top")) - parseInt($(this).css("top")) < 100
+                        && parseInt($("#" + index).css("top")) - parseInt($(this).css("top")) > -100
+                        && parseInt($("#" + index).css("left")) - parseInt($(this).css("left")) < 100
+                        && parseInt($("#" + index).css("left")) - parseInt($(this).css("left")) > -100) {
+                        mob_cible = $(this).attr("id");
+                        random_number = Math.floor((Math.random() * 1000) + 1);
+                        $("#grille").append("<div class='fire' id='fire_" + random_number + "' style='top: " + (parseInt($("#" + index).css("top")) + 25) + "px; left:" + (parseInt($("#" + index).css("left")) + 25) + "px'></div>");
+                        $("#fire_" + random_number).animate({
+                            left: $("#" + mob_cible).css("left"),
+                            top: $("#" + mob_cible).css("top"),
+                            height: "20px",
+                            width: "20px",
+                            opacity: "0.5"
+                        }, 500, function () {
+                            $("#" + mob_cible).attr("name", parseInt($("#" + mob_cible).attr("name")) - parseInt($("#" + index).attr('name')));
+                            $("#" + mob_cible + " div").text(parseInt($("#" + mob_cible).attr("name")) + " unités");
+                            if (parseInt($("#" + mob_cible).attr("name")) <= 0) {
+                                $("#" + mob_cible).remove();
+                                $("#money h1").text(parseInt($("#money h1").text()) + 10 + "$");
+                                setTimeout(() => {
+                                    random_number2 = Math.floor((Math.random() * 30) + difficulty);
+                                    $("#grille").append("<div style='position:absolute; left: " + StartX + "; top: " + StartY + "' class='mob' name='" + random_number2 + "' id='mob_" + Math.floor((Math.random() * 100) + 1) + "'><div id='stats_mob'>"+random_number2+" unités</div></div>")
+                                    setMob(StartX, StartY);
+                                    $(".mob").css("top", UnitX + "px");
+                                    $(".mob").css("left", UnitY + "px");
+                                    difficulty = difficulty + 5;
+                                }, 5000);
+
+                            }
+                            $(this).remove();
+                        });
+                    }
+                });
+
             }
         }
-    }, 2000);*/
+    }, 1000);
 });
 

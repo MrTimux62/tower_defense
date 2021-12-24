@@ -9,8 +9,8 @@
 <body>
     <div id="life_div">
         <div id="life_bar">
-            <h2 id="life_info">Vie Restantes : 20</h2>
-            <div id="life_value">
+            <h2 id="life_info" name='100'>Vie Restantes : 100</h2>
+            <div id="life_value" style="width: 100%;">
 
             </div>
         </div>

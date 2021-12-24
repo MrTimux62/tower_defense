@@ -16,7 +16,7 @@ html, body {
     text-align: center;
     border-radius: 5px;
     box-shadow: 0 0 5px black;
-    margin:50px;
+    margin: 50px;
     padding: 20px;
 }
 
@@ -33,7 +33,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.case img{
+.case img {
     width: 50px;
     height: 50px;
 }
@@ -93,11 +93,10 @@ html, body {
 
 #life_value {
     height: 100%;
-    width: 20%;
     background-color: darkgreen;
 }
 
-#life_info{
+#life_info {
     position: absolute;
     color: rgb(211, 53, 53);
     transform: translate(-50%, -50%);
@@ -145,4 +144,12 @@ img {
     top: 15%;
     font-size: 150%;
     transform: translate(-50%, -50%);
+}
+
+.fire {
+    position: absolute;
+    background-color: blue;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
 }
