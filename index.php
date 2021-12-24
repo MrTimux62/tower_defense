@@ -16,33 +16,13 @@
         </div>
         <hr>
     </div>
+    <div id="money">
+        <h1>80$</h1>
+    </div>
     <div id="grille">
-
+        
     </div>
-    <div id="build_footer">
-    <div class="turret" id="tourelle_1">
-        <div class="cost">
-            50$
-        </div>
-        <div>
-            <img src="./turret_1.png" alt="">
-        </div>
-        <div class="description">
-            Mitrailleuse
-        </div>
-    </div>
-    <div class="turret" id="tourelle_2">
-        <div class="cost">
-            50$
-        </div>
-        <div>
-            <img src="./turret_1.png" alt="">
-        </div>
-        <div class="description">
-            Lance-flamme
-        </div>
-    </div>
-    </div>
+    <?php require_once './turret_menu.php' ?>
     <script src="jquery-3.6.0.min.js"></script>
     <script src="laby.js"></script>
 </body>

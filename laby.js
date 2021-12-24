@@ -1,12 +1,14 @@
 
 
-let ligne1 = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
-let ligne2 = ['A', 'O', 'O', 'O', 'X', 'X', 'X', 'O', 'O', 'O', 'X', 'X', 'O', 'O', 'O', 'O', 'X', 'X']
-let ligne3 = ['X', 'X', 'X', 'O', 'X', 'X', 'X', 'O', 'X', 'O', 'X', 'X', 'O', 'X', 'X', 'O', 'X', 'X']
-let ligne4 = ['X', 'X', 'X', 'O', 'X', 'X', 'X', 'O', 'X', 'O', 'O', 'O', 'O', 'X', 'X', 'O', 'X', 'X']
-let ligne5 = ['X', 'X', 'X', 'O', 'O', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'B']
-let ligne6 = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
-let full_lignes = [ligne1, ligne2, ligne3, ligne4, ligne5, ligne6]
+let ligne1 = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
+let ligne2 = ['A', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'O', 'B']
+let ligne3 = ['X', 'X', 'O', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'O', 'O', 'X', 'O', 'X', 'O', 'X', 'X', 'X', 'X', 'O', 'X']
+let ligne4 = ['X', 'X', 'O', 'X', 'X', 'X', 'X', 'O', 'X', 'X', 'X', 'O', 'X', 'O', 'X', 'O', 'O', 'O', 'O', 'X', 'O', 'X']
+let ligne5 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 'O', 'X', 'X', 'X', 'O', 'X', 'O', 'X', 'X', 'X', 'X', 'O', 'X', 'O', 'X']
+let ligne6 = ['X', 'X', 'O', 'X', 'X', 'O', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'O', 'X', 'O', 'X']
+let ligne7 = ['X', 'X', 'O', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'X']
+let ligne8 = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
+let full_lignes = [ligne1, ligne2, ligne3, ligne4, ligne5, ligne6, ligne7, ligne8]
 let Xcord = 25;
 let Ycord = 25;
 let UnitX = 0;
@@ -19,6 +21,8 @@ let case_nb = 1;
 let Top_Go, Right_Go, Bottom_Go;
 let No_Bottom = 0;
 let No_Top = 0;
+let selected_turret = "";
+let turret_rotation = 0;
 
 $(document).ready(function () {
 
@@ -104,5 +108,87 @@ $(document).ready(function () {
             $(".mob").css("left", UnitY + "px");
         }
     }, 1500);
+    moneydrop = setInterval(() => {
+        $("#money h1").text(parseInt($("#money h1").text()) + 5 + "$");
+    }, 3000);
 
+    $(".case").click(function (e) {
+        e.preventDefault();
+        console.log(selected_turret);
+        if (selected_turret != "") {
+            if ($(this).find('input').length == 0) {
+                $(this).html("<img src='./img/tourelles/" + selected_turret + ".png'><input type='hidden' value='" + selected_turret + "'>");
+                $("#money h1").text(parseInt($("#money h1").text()) - cost_turret + "$");
+                $(".turret").css("background-color", "white");
+                $(".case").css("cursor", "");
+                $(this).css("transform", "rotate(" + turret_rotation + "deg)")
+                selected_turret = "";
+            }
+
+        }
+    });
+
+    $(".case").hover(function () {
+        // over
+        if (selected_turret != "") {
+            if ($(this).find('input').length == 0) {
+                $(this).html("<img src='./img/tourelles/" + selected_turret + ".png'>");
+                $(this).css("transform", "rotate(" + turret_rotation + "deg)")
+            }
+        }
+    }, function () {
+        // out
+        if (selected_turret != "") {
+            if ($(this).find('input').length == 0) {
+                $(this).html("");
+                $(this).css("transform", "")
+            }
+        }
+
+    }
+    );
+
+    $(document).keydown(function (e) {
+        if (e.which = 82) {
+            if (turret_rotation == 360) {
+                turret_rotation = 90;
+            } else {
+                turret_rotation = turret_rotation + 90;
+            }
+        }
+    });
+
+
+
+    $(".turret").hover(function () {
+        // over
+        if (parseInt($("#money h1").text()) >= $(this).attr("name")) {
+            $(this).css("cursor", "pointer");
+        } else {
+            $(this).css("cursor", "not-allowed");
+        }
+    }
+    );
+
+    $(".turret").click(function (e) {
+        e.preventDefault();
+        if (parseInt($("#money h1").text()) >= $(this).attr("name")) {
+            selected_turret = $(this).attr("id");
+            cost_turret = $(this).attr("name");
+            $(".turret").css("background-color", "white");
+            $(this).css("background-color", "rgba(24, 179, 31, 0.4)");
+            $(".case").css("cursor", "pointer");
+        }
+    });
+/*
+    attack_turret = setInterval(() => {
+        for (let index = 1; index < case_nb; index++) {
+            if ($("#"+index).find('input').length == 0) {
+                if ($("#"+index) {
+                    
+                }
+            }
+        }
+    }, 2000);*/
 });
+

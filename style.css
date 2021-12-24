@@ -4,6 +4,8 @@ html, body {
     padding: 0;
     margin: 0;
     overflow: hidden;
+    overflow-x: scroll;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .card {
@@ -31,14 +33,20 @@ html, body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
+.case img{
+    width: 50px;
+    height: 50px;
+}
+
 .case:hover {
     box-shadow: 0 0 2px white;
-    z-index: 1;
+    z-index: 10;
 }
 
 .mob {
     width: 25px;
     height: 25px;
+    border-radius: 50%;
     background-color: red;
 }
 
@@ -60,12 +68,10 @@ html, body {
 }
 
 #grille {
-    position: relative;
-    margin: 0 auto;
     position: absolute;
-    left: 25%;
-    top: 30%;
     transform: translate(-50%, -50%);
+    left: 20%;
+    top: 25%;
 }
 
 #life_div {
@@ -110,18 +116,33 @@ html, body {
     height: 15%;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
+    justify-content: center;
 }
 
 .turret {
     background-color: white;
     border-radius: 15px;
-    width: 100px;
+    width: 150px;
     height: 100px;
     margin: 20px;
     text-align: center;
+    transition: transform 500ms;
+}
+
+.turret:hover {
+    transition: transform 500ms;
+    transform: scale(1.3);
 }
 
 img {
     width: 60px;
     height: 60px;
+}
+
+#money {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    font-size: 150%;
+    transform: translate(-50%, -50%);
 }
